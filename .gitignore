@@ -1,0 +1,11 @@
+temp
+.env
+.env.prod
+.env.production
+node_modules
+coverage
+storage/*.db
+storage/*.db-wal
+storage/*.db-shm
+
+.env.dev
