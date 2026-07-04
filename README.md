@@ -1,3 +1,12 @@
+---
+title: JSON API Server
+emoji: 🚀
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+pinned: false
+---
+
 # json-api-server
 
 > 🌐 Language / Ngôn ngữ: **English** | [Tiếng Việt](README.vi.md)
