@@ -9,3 +9,5 @@ storage/*.db-wal
 storage/*.db-shm
 
 .env.dev
+manual-test-coverage/results
+manual-test-coverage/coverage-report.md
