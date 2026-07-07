@@ -4,6 +4,18 @@
 
 A JSONPlaceholder-compatible REST API built mostly with **Node.js built-ins** — the only runtime dependency is `argon2` for admin password hashing. Uses `node:sqlite` for storage and a custom Redis client implemented over the raw RESP protocol via TCP sockets.
 
+## Highlights
+
+- **Zero-framework, minimal dependencies** — Only **1 production dependency** (`argon2`). HTTP, SQLite, networking — all Node.js built-ins. No Express, no ORM, no Redis driver.
+- **Custom Redis client from scratch** — A full Redis client implementing the **RESP protocol** over raw TCP sockets. Supports `AUTH`, `SELECT`, `EVAL` (Lua scripts), URL connection strings, and automatic reconnect — all in ~200 lines.
+- **100% test coverage** — **250 tests across 14 files** achieve 100% on statements, branches, functions, and lines. Integration tests run against a real HTTP server + SQLite; unit tests use dependency injection and CJS cache mocking.
+- **Multi-tier rate limiting** — Three-tier fallback: Redis (atomic Lua) → in-memory (LRU, 10k entries) → allow-all. Features a circuit breaker (3 failures → 30s open), CIDR-based trusted proxy extraction, and escalating block durations (5m → 20m → 1h).
+- **Production-hardened Docker** — Multi-stage build, **non-root user**, automated DB setup on start, `.env` files excluded. Dotenv is skipped in production — all config comes via environment variables.
+- **Runtime configuration** — Update rate-limit and Redis settings via admin API **without restarting**. Changes take immediate effect through in-memory overrides.
+- **Argon2 security** — Admin passwords hashed with argon2, results cached with 5s TTL and 1k-entry LRU. SQL injection prevented via column whitelisting and LIKE escaping. Body size limited to 1 MB.
+- **Built-in dev server with file watching** — `npm run dev` uses Node's native `--watch` flag. No Nodemon, no chokidar, no extra dependencies.
+- **Bilingual documentation** — Full docs in **English and Vietnamese** for README, testing guide, and technical architecture.
+
 ## Technologies Used
 
 - **Node.js >= 22** — runtime with built-in `node:sqlite`, `node:http`, `node:net`, etc.
@@ -371,6 +383,14 @@ npm run test:coverage # With coverage report (100% across all metrics)
 ```
 
 See [tests/README.md](tests/README.md) for full documentation.
+
+## Similar Project
+
+If you like this server but want a **dashboard UI** built with **Tailwind CSS**, check out:
+
+- **GitHub:** [JSON-API-Server-With-Dashboard-UI](https://github.com/dangkhoa2016/JSON-API-Server-With-Dashboard-UI)
+
+It provides the same JSONPlaceholder-compatible API with an intuitive web interface — highly recommended!
 
 ## License
 
